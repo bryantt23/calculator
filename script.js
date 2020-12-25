@@ -25,3 +25,19 @@ function operate(a, b, operator) {
     divide(a, b);
   }
 }
+
+let curNum = 0;
+const calculatorButtons = document.querySelectorAll('.calculator-buttons');
+console.log(calculatorButtons);
+calculatorButtons.forEach(button => {
+  button.addEventListener('click', e => {
+    console.log(e.target.classList);
+    console.log(e.target.classList.contains('number-button'));
+    console.log(e.target.innerText);
+
+    if (e.target.classList.contains('number-button')) {
+      curNum = curNum * 10 + Number(e.target.innerText);
+    }
+    console.log(curNum);
+  });
+});
