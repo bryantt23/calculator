@@ -1,3 +1,52 @@
+let curNum = 0,
+  prevNum = 0,
+  operator = '+';
+
+const calculatorButtons = document.querySelectorAll('.calculator-buttons');
+console.log(calculatorButtons);
+calculatorButtons.forEach(button => {
+  button.addEventListener('click', e => {
+    console.log(e.target.classList);
+    console.log(e.target.classList.contains('number-button'));
+    console.log(e.target.innerText);
+
+    if (e.target.classList.contains('number-button')) {
+      curNum = curNum * 10 + Number(e.target.innerText);
+      updateDisplayNumber(curNum);
+    } else if (e.target.classList.contains('operator')) {
+      let nextOperator = e.target.innerText;
+      let res = operate(prevNum, curNum, operator);
+      updateDisplayNumber(res);
+      prevNum = res;
+      curNum = 0;
+      operator = nextOperator;
+      // resetVariables();
+    } else if (e.target.classList.contains('equal')) {
+      // operator = e.target.innerText;
+      // let res = operator(prevNum, curNum, operator);
+      // updateDisplayNumber(res);
+      // resetVariables();
+    }
+    console.log(curNum);
+  });
+});
+
+const displayNumber = document.querySelector('.output-number');
+
+function resetVariables() {
+  curNum = 0;
+  prevNum = 0;
+  operator = '';
+}
+
+function clearDisplay() {
+  displayNumber.innerText = 0;
+}
+
+function updateDisplayNumber(num) {
+  displayNumber.innerText = num;
+}
+
 function add(a, b) {
   return a + b;
 }
@@ -15,29 +64,15 @@ function multiply(a, b) {
 }
 
 function operate(a, b, operator) {
+  let res;
   if (operator === '+') {
-    add(a, b);
+    res = add(a, b);
   } else if (operator === '-') {
-    subtract(a, b);
+    res = subtract(a, b);
   } else if (operator === '*') {
-    multiply(a, b);
+    res = multiply(a, b);
   } else {
-    divide(a, b);
+    res = divide(a, b);
   }
+  return res;
 }
-
-let curNum = 0;
-const calculatorButtons = document.querySelectorAll('.calculator-buttons');
-console.log(calculatorButtons);
-calculatorButtons.forEach(button => {
-  button.addEventListener('click', e => {
-    console.log(e.target.classList);
-    console.log(e.target.classList.contains('number-button'));
-    console.log(e.target.innerText);
-
-    if (e.target.classList.contains('number-button')) {
-      curNum = curNum * 10 + Number(e.target.innerText);
-    }
-    console.log(curNum);
-  });
-});
