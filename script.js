@@ -20,14 +20,20 @@ calculatorButtons.forEach(button => {
       prevNum = res;
       curNum = 0;
       operator = nextOperator;
-      // resetVariables();
-    } else if (e.target.classList.contains('equal')) {
-      // operator = e.target.innerText;
-      // let res = operator(prevNum, curNum, operator);
-      // updateDisplayNumber(res);
-      // resetVariables();
+    } else if (e.target.classList.contains('equals')) {
+      if (operator === '/' && curNum === 0) {
+        alert("You can't divide by zero");
+        return;
+      }
+      let res = operate(prevNum, curNum, operator);
+      updateDisplayNumber(res);
+      prevNum = 0;
+      curNum = res;
+      operator = '+';
+    } else if (e.target.classList.contains('clear')) {
+      resetVariables();
+      clearDisplay();
     }
-    console.log(curNum);
   });
 });
 
@@ -36,7 +42,7 @@ const displayNumber = document.querySelector('.output-number');
 function resetVariables() {
   curNum = 0;
   prevNum = 0;
-  operator = '';
+  operator = '+';
 }
 
 function clearDisplay() {
@@ -74,5 +80,5 @@ function operate(a, b, operator) {
   } else {
     res = divide(a, b);
   }
-  return res;
+  return Math.trunc(res, 1);
 }
